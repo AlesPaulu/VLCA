@@ -234,6 +234,7 @@ def make_slider_row(pt, key, label, min_val, max_val, current_val, unit, step=No
             id={"type": "param-slider", "pt": pt, "key": key},
             min=min_val, max=max_val, step=step, value=current_val,
             marks=None, tooltip={"always_visible": False}, className="vlca-slider",
+            updatemode="mouseup",
         ),
     ], style={"marginBottom": "0px"})
 
@@ -1025,7 +1026,12 @@ def render_dashboard(vtype, trajectory, impact, params_json,
     lang = lang or "en"
     params = json.loads(params_json)
 
-    results   = compute_impacts(vtype, trajectory, impact, params)
+    # Cache compute_impacts — same inputs → same results, no recompute
+    cache_key = (vtype, trajectory, impact, params_json)
+    if not hasattr(render_dashboard, "_cache") or render_dashboard._cache_key != cache_key:
+        render_dashboard._cache     = compute_impacts(vtype, trajectory, impact, params)
+        render_dashboard._cache_key = cache_key
+    results = render_dashboard._cache
     sidebar   = build_sidebar(vtype, params, hidden_pts, lang)
     summary   = build_summary(vtype, results, impact, hidden_pts)
     bar_leg   = build_bar_legend(hidden_phases, lang)
