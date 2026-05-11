@@ -1,0 +1,56 @@
+/* Fix Plotly graph-div white background bleeding through */
+.js-plotly-plot, .plot-container, .plotly-graph-div {
+    background: #f7f6f3 !important;
+}
+
+/* Hide number-input spin buttons (keep clean look) */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] { -moz-appearance: textfield; }
+
+/* Ensure dropdown menu renders above all other content.
+   Position is fixed programmatically by the JS portal below. */
+#impact-select .Select-menu-outer {
+    z-index: 9999 !important;
+}
+
+/* Match impact dropdown height to the tab buttons (~28px) */
+#impact-select .Select-control {
+    min-height: 28px !important;
+    height: 28px !important;
+}
+#impact-select .Select-value {
+    line-height: 26px !important;
+}
+#impact-select .Select-placeholder {
+    line-height: 26px !important;
+}
+#impact-select .Select-input {
+    height: 26px !important;
+}
+#impact-select .Select-arrow-zone {
+    vertical-align: middle;
+    padding-top: 0 !important;
+}
+
+/* Make dropdown option text and selected value black */
+#impact-select .Select-value-label,
+#impact-select .Select-placeholder,
+#impact-select .VirtualizedSelectOption,
+#impact-select .Select-option,
+.dash-dropdown .Select-value-label,
+.dash-dropdown .Select-placeholder,
+.Select-menu-outer .VirtualizedSelectOption,
+.Select-menu-outer .Select-option {
+    color: #000000 !important;
+}
+
+/* Also target the newer react-select used in some Dash versions */
+#impact-select .Select__single-value,
+#impact-select .Select__option,
+#impact-select .Select__placeholder {
+    color: #000000 !important;
+}
