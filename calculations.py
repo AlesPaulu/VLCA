@@ -95,22 +95,72 @@ def _load_tables():
 _DYN, _SPROD, _SAE = _load_tables()
 
 
+# ── Pre-built O(1) lookup indices ─────────────────────────────────────────────
+
+class _Row:
+    """Thin dict wrapper that mimics the pandas Series interface used by callers.
+
+    Callers access values with ``row["column name"]`` and check membership with
+    ``col in row.index``.  All original column names (including spaces / slashes)
+    are preserved because we build from ``to_dict(orient='records')``.
+    """
+    __slots__ = ("_d",)
+
+    def __init__(self, d: dict):
+        self._d = d
+
+    def __getitem__(self, key):
+        return self._d[key]
+
+    def __contains__(self, key):
+        return key in self._d
+
+    @property
+    def index(self):
+        return list(self._d.keys())
+
+
+def _build_dyn_index(dyn: pd.DataFrame) -> dict:
+    idx: dict = {}
+    for d in dyn.to_dict(orient="records"):
+        key = (
+            d["Phase"],
+            d["Vehicle"],
+            d["Powertrain"],
+            d["RCP"],
+            d["Impact category"],
+            d["Normalization and weighting"],
+        )
+        idx[key] = _Row(d)
+    return idx
+
+
+def _build_static_index(df: pd.DataFrame) -> dict:
+    idx: dict = {}
+    for d in df.to_dict(orient="records"):
+        key = (d["Vehicle"], d["Powertrain"], d["Phase"])
+        idx[key] = _Row(d)
+    return idx
+
+
+_DYN_IDX   = _build_dyn_index(_DYN)
+_SPROD_IDX = _build_static_index(_SPROD)
+_SAE_IDX   = _build_static_index(_SAE)
+
+
 def _dyn_row(phase, vehicle, powertrain, rcp, impact_label, normalised: bool = False):
-    """Return the single matching row from the dynamic table (or None)."""
+    """O(1) dict lookup — replaces the previous full-DataFrame scan."""
     norm_val = "Yes" if normalised else "No"
-    mask = (
-        (_DYN["Phase"]                    == phase)       &
-        (_DYN["Vehicle"]                  == vehicle)     &
-        (_DYN["Powertrain"]               == powertrain)  &
-        (_DYN["RCP"]                      == rcp)         &
-        (_DYN["Impact category"]          == impact_label)&
-        (_DYN["Normalization and weighting"] == norm_val)
-    )
-    rows = _DYN[mask]
-    return rows.iloc[0] if len(rows) >= 1 else None
+    return _DYN_IDX.get((phase, vehicle, powertrain, rcp, impact_label, norm_val))
 
 
 def _static_row(df, vehicle, powertrain, phase):
+    """O(1) dict lookup for static tables."""
+    if df is _SPROD:
+        return _SPROD_IDX.get((vehicle, powertrain, phase))
+    if df is _SAE:
+        return _SAE_IDX.get((vehicle, powertrain, phase))
+    # Fallback (should never be reached with current callers)
     mask = (
         (df["Vehicle"]    == vehicle)    &
         (df["Powertrain"] == powertrain) &
