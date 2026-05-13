@@ -75,10 +75,13 @@ POPUP_DATA = {
         "vehicleParams": {
             "title": "Vehicle Parameters",
             "paragraphs": [
-                "Car: A medium-size car weighing approximately 1.0 to 1.4 tonnes and designed for five passengers.",
-                "LCV: A light commercial vehicle, classified as N1-III, weighing between 1.5 and 1.9 tonnes and functioning as a compact delivery van for commercial purposes.",
-                "Truck: A rigid truck weighing approximately 6.4 to 6.9 tonnes with a 7.5 to 12 tonnes payload, designed for freight transport and commercial operations over longer distances.",
-                "Bus: An urban midi bus, weighing 12.5 to 13.9 tonnes, carrying dozens of passengers for public transit in urban areas.",
+                "ICEV-P: Internal Combustion Engine Vehicle – Petrol. A conventional petrol-powered vehicle using a spark-ignition engine.",
+                "ICEV-D: Internal Combustion Engine Vehicle – Diesel. A conventional diesel-powered vehicle using a compression-ignition engine.",
+                "ICEV-CNG: Internal Combustion Engine Vehicle – Compressed Natural Gas. A vehicle powered by compressed natural gas instead of liquid fuel.",
+                "HEV: Hybrid Electric Vehicle. Combines a conventional internal combustion engine with an electric motor; the battery is charged through regenerative braking and the engine, without external charging.",
+                "PHEV: Plug-in Hybrid Electric Vehicle. Similar to a HEV but with a larger battery that can be charged from an external power source.",
+                "BEV: Battery Electric Vehicle. Powered entirely by electricity stored in an onboard battery, with no combustion engine.",
+                "FCEV: Fuel Cell Electric Vehicle. Uses a hydrogen fuel cell to generate electricity that powers an electric motor, emitting only water vapour.",
             ],
         },
         "vehicleMode": {
@@ -125,10 +128,13 @@ POPUP_DATA = {
         "vehicleParams": {
             "title": "Parametry vozidla",
             "paragraphs": [
-                "Auto: Osobní automobil střední velikosti o hmotnosti přibližně 1,0 až 1,4 tuny, určený pro pět cestujících.",
-                "Dodávka: Lehké užitkové vozidlo kategorie N1-III o hmotnosti 1,5 až 1,9 tuny, sloužící jako kompaktní dodávkové vozidlo pro komerční účely.",
-                "Náklaďák: Pevný nákladní automobil o hmotnosti přibližně 6,4 až 6,9 tuny s užitečným zatížením 7,5 až 12 tun, určený pro nákladní dopravu a komerční provoz na delší vzdálenosti.",
-                "Autobus: Městský midi autobus o hmotnosti 12,5 až 13,9 tuny, přepravující desítky cestujících v rámci městské hromadné dopravy.",
+                "ICEV-P: Vozidlo se spalovacím motorem na benzin. Konvenční benzinové vozidlo se zážehovým motorem.",
+                "ICEV-D: Vozidlo se spalovacím motorem na naftu. Konvenční naftové vozidlo se vznětovým motorem.",
+                "ICEV-CNG: Vozidlo se spalovacím motorem na stlačený zemní plyn. Vozidlo poháněné stlačeným zemním plynem místo kapalného paliva.",
+                "HEV: Hybridní elektrické vozidlo. Kombinuje konvenční spalovací motor s elektrickým motorem; baterie se nabíjí rekuperačním brzděním a motorem, bez externího nabíjení.",
+                "PHEV: Plug-in hybridní elektrické vozidlo. Podobné jako HEV, ale s větší baterií, kterou lze nabíjet z externího zdroje energie.",
+                "BEV: Bateriové elektrické vozidlo. Poháněno výhradně elektřinou uloženou v palubní baterii, bez spalovacího motoru.",
+                "FCEV: Vozidlo s palivovým článkem. Využívá vodíkový palivový článek k výrobě elektřiny pohánějící elektrický motor; emituje pouze vodní páru.",
             ],
         },
         "vehicleMode": {
